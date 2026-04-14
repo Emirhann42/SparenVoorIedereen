@@ -1,8 +1,30 @@
 ﻿import tkinter
 from tkinter import messagebox
+import sqlite3
 
-# Opslag voor gebruikers (simpele database)
-gebruikers = {}
+def login():
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    mail = username_entry.get()
+    password = password_entry.get()
+    cur.execute("SELECT * FROM klanten WHERE email == ? AND wachtwoord == ?", (mail, password))
+    result = cur.fetchone()
+    if result:
+        print("Logged in")
+    else:
+        print("Failed")
+
+def register():
+    con = sqlite3.connect("database.db")
+    cur = con.cursor()
+    name = naam_entry.get()
+    adress = adres_entry.get()
+    email = email_entry.get()
+    telefoon = telefoon_entry.get()
+    password = wachtwoord_entry.get()
+    cur.execute("INSERT INTO klanten (naam, adres, email, telefoonnummer, wachtwoord) VALUES (?,?,?,?,?)", (name,adress,email,telefoon,password))
+    con.commit()
+
 
 window = tkinter.Tk()
 window.title("Login")
@@ -12,30 +34,8 @@ window.configure(bg='#333333')
 window.maxsize(700, 500)
 window.minsize(500, 400)
 
-def login():
-    username = username_entry.get()
-    password = password_entry.get()
-
-    if username in gebruikers and gebruikers[username] == password:
-        messagebox.showinfo(title="Login Success", message="Je bent ingelogd!")
-    else:
-        messagebox.showerror(title="Error", message="Ongeldige login.")
-
-def registreer():
-    username = username_entry.get()
-    password = password_entry.get()
-
-    if username == "" or password == "":
-        messagebox.showwarning("Fout", "Vul alles in!")
-    elif username in gebruikers:
-        messagebox.showwarning("Fout", "Gebruiker bestaat al!")
-    else:
-        gebruikers[username] = password
-        messagebox.showinfo("Succes", "Registratie gelukt!")
-
 frame = tkinter.Frame(bg='#333333')
 
-# Widgets
 login_label = tkinter.Label(
     frame, text="Login", bg='#333333', fg="#0000FF", font=("Arial", 30))
 
@@ -55,9 +55,8 @@ login_button = tkinter.Button(
 
 registreer_button = tkinter.Button(
     frame, text="Registreer", bg="#00AA00", fg="#FFFFFF",
-    font=("Arial", 16), command=registreer)
+    font=("Arial", 16))
 
-# Layout
 login_label.grid(row=0, column=0, columnspan=2, pady=40)
 username_label.grid(row=1, column=0)
 username_entry.grid(row=1, column=1, pady=20)
