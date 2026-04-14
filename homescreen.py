@@ -96,4 +96,3 @@ for i in range(4):
 
 # app starten
 window.mainloop()
-window.mainloop()
