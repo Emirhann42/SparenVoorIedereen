@@ -1,4 +1,4 @@
-﻿import tkinter as tk
+import tkinter as tk
 
 # ---- "DATABASE" (simulatie) ----
 gebruiker_naam = "Alex"   # <-- dit komt zogenaamd uit database
@@ -95,4 +95,5 @@ for i in range(4):
     ).pack(fill="x", padx=10, pady=5)
 
 # app starten
+window.mainloop()
 window.mainloop()
