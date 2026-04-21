@@ -1,98 +1,98 @@
 import tkinter as tk
 
-# ---- "DATABASE" (simulatie) ----
-gebruiker_naam = "Alex"   # <-- dit komt zogenaamd uit database
-saldo_bedrag = "€ 1.250,00"
 
-# venster maken
-window = tk.Tk()
-window.title("Bankapp Dashboard")
-window.geometry("500x400")
-window.configure(bg="#333333")
+class HomeScreen(tk.Frame):
+    def __init__(self, parent, controller):
+        super().__init__(parent, bg="#333333")
 
-# min/max grootte
-window.minsize(500, 500)
-window.maxsize(700, 600)
+        self.controller = controller
 
-# titel
-titel = tk.Label(
-    window,
-    text="Home / Dashboard",
-    font=("Arial", 18, "bold"),
-    bg="#333333",
-    fg="white"
-)
-titel.pack(pady=10)
+        # ---- "DATABASE" (simulatie) ----
+        gebruiker_naam = "Alex"
+        saldo_bedrag = "€ 1.250,00"
 
-# welkom tekst (uit "database")
-welkom = tk.Label(
-    window,
-    text=f"Goedemiddag, {gebruiker_naam}",
-    font=("Arial", 14),
-    bg="white",
-    width=30,
-    height=2,
-    relief="solid"
-)
-welkom.pack(pady=5)
+        # titel
+        titel = tk.Label(
+            self,
+            text="Home / Dashboard",
+            font=("Arial", 18, "bold"),
+            bg="#333333",
+            fg="white"
+        )
+        titel.pack(pady=10)
 
-# saldo (uit "database")
-saldo = tk.Label(
-    window,
-    text=saldo_bedrag,
-    font=("Arial", 24, "bold"),
-    bg="white",
-    width=15,
-    height=2,
-    relief="solid"
-)
-saldo.pack(pady=10)
+        # welkom tekst
+        welkom = tk.Label(
+            self,
+            text=f"Goedemiddag, {gebruiker_naam}",
+            font=("Arial", 14),
+            bg="white",
+            width=30,
+            height=2,
+            relief="solid"
+        )
+        welkom.pack(pady=5)
 
-# frame voor knoppen
-knoppen_frame = tk.Frame(window, bg="#333333")
-knoppen_frame.pack(pady=10)
+        # saldo
+        saldo = tk.Label(
+            self,
+            text=saldo_bedrag,
+            font=("Arial", 24, "bold"),
+            bg="white",
+            width=15,
+            height=2,
+            relief="solid"
+        )
+        saldo.pack(pady=10)
 
-# knop functie
-def maak_knop(tekst):
-    return tk.Button(
-        knoppen_frame,
-        text=tekst,
-        width=15,
-        height=2,
-        bg="#0000FF",
-        fg="white",
-        activebackground="#0000CC"
-    )
+        # frame voor knoppen
+        knoppen_frame = tk.Frame(self, bg="#333333")
+        knoppen_frame.pack(pady=10)
 
-# knoppen
-maak_knop("Transacties").grid(row=0, column=0, padx=5, pady=5)
-maak_knop("Overboeken").grid(row=0, column=1, padx=5, pady=5)
-maak_knop("Rente").grid(row=1, column=0, padx=5, pady=5)
-maak_knop("Instellingen").grid(row=1, column=1, padx=5, pady=5)
+        # knop functie (NOW WITH ACTION)
+        def maak_knop(tekst, command=None):
+            return tk.Button(
+                knoppen_frame,
+                text=tekst,
+                width=15,
+                height=2,
+                bg="#0000FF",
+                fg="white",
+                activebackground="#0000CC",
+                command=command
+            )
 
-# titel recente transacties
-recente_titel = tk.Label(
-    window,
-    text="Recente transacties",
-    font=("Arial", 13, "bold"),
-    bg="#333333",
-    fg="white"
-)
-recente_titel.pack(pady=10)
+        # knoppen
+        maak_knop("Transacties").grid(row=0, column=0, padx=5, pady=5)
+        maak_knop("Overboeken").grid(row=0, column=1, padx=5, pady=5)
+        maak_knop("Rente").grid(row=1, column=0, padx=5, pady=5)
 
-# frame transacties
-transacties_frame = tk.Frame(window, bg="white", relief="solid", bd=1)
-transacties_frame.pack(padx=20, pady=5, fill="both")
+        # 🔥 THIS ONE WORKS NOW
+        maak_knop(
+            "Instellingen",
+            command=lambda: controller.show_frame("SettingsScreen")
+        ).grid(row=1, column=1, padx=5, pady=5)
 
-# puntjes (placeholder)
-for i in range(4):
-    tk.Label(
-        transacties_frame,
-        text="...",
-        anchor="w",
-        bg="white",
-        font=("Arial", 12)
-    ).pack(fill="x", padx=10, pady=5)
+        # titel recente transacties
+        recente_titel = tk.Label(
+            self,
+            text="Recente transacties",
+            font=("Arial", 13, "bold"),
+            bg="#333333",
+            fg="white"
+        )
+        recente_titel.pack(pady=10)
 
-# app starten
-window.mainloop()
+        # frame transacties
+        transacties_frame = tk.Frame(self, bg="white", relief="solid", bd=1)
+        transacties_frame.pack(padx=20, pady=5, fill="both")
+
+        # placeholder transacties
+        for i in range(4):
+            tk.Label(
+                transacties_frame,
+                text="...",
+                anchor="w",
+                bg="white",
+                font=("Arial", 12)
+            ).pack(fill="x", padx=10, pady=5)
