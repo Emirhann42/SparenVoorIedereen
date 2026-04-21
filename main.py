@@ -3,6 +3,9 @@ import tkinter as tk
 from login import LoginScreen
 from homescreen import HomeScreen
 from instellingen import SettingsScreen
+from rente_grafiek import RenteScreen
+from transactie_geschiedenis import TransactiesScreen
+from register import RegisterScreen
 
 
 class App(tk.Tk):
@@ -10,7 +13,7 @@ class App(tk.Tk):
         super().__init__()
 
         self.title("My App")
-        self.geometry("600x400")
+        self.geometry('360x450')
 
         self.frames = {}
 
@@ -18,7 +21,7 @@ class App(tk.Tk):
         container.pack(fill="both", expand=True)
 
         # Add all screens
-        for F in (LoginScreen, HomeScreen, SettingsScreen):
+        for F in (LoginScreen, HomeScreen, SettingsScreen, RenteScreen, TransactiesScreen, RegisterScreen):
             frame = F(container, self)
             self.frames[F.__name__] = frame
             frame.grid(row=0, column=0, sticky="nsew")

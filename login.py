@@ -9,7 +9,6 @@ class LoginScreen(tk.Frame):
 
         self.controller = controller
 
-        # ---------------- UI ----------------
         login_label = tk.Label(
             self, text="Login",
             bg='#333333', fg="#0000FF",
@@ -43,7 +42,6 @@ class LoginScreen(tk.Frame):
         )
         register_button.pack(pady=10)
 
-    # ---------------- LOGIN LOGIC ----------------
     def login(self):
         con = sqlite3.connect("database.db")
         cur = con.cursor()
@@ -62,7 +60,6 @@ class LoginScreen(tk.Frame):
         if result:
             messagebox.showinfo("Success", "Logged in!")
 
-            # 🔥 GO TO HOME SCREEN
             self.controller.show_frame("HomeScreen")
 
         else:

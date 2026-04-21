@@ -8,20 +8,16 @@ class RenteScreen(tk.Frame):
 
         self.controller = controller
 
-        # ---- DATA ----
         self.rente_voor_spaarder = 0.018
 
-        # ---- TITLE ----
-        titel = tk.Label(
+        tk.Label(
             self,
             text="Renteoverzicht",
             font=("Arial", 18, "bold"),
             bg="#333333",
             fg="white"
-        )
-        titel.pack(pady=10)
+        ).pack(pady=10)
 
-        # ---- FRAME ----
         frame = tk.Frame(self, bg="white", relief="solid", bd=1)
         frame.pack(padx=20, pady=10)
 
@@ -38,27 +34,24 @@ class RenteScreen(tk.Frame):
         self.invoer.insert(0, "100")
         self.invoer.pack(pady=5)
 
-        knop = tk.Button(
+        tk.Button(
             frame,
             text="Bereken",
             bg="#0000FF",
             fg="white",
             width=15,
             command=self.bereken
-        )
-        knop.pack(pady=10)
+        ).pack(pady=10)
 
-        terug = tk.Button(
+        tk.Button(
             frame,
             text="← Terug",
             command=lambda: controller.show_frame("HomeScreen")
-        )
-        terug.pack(pady=10)
+        ).pack(pady=10)
 
-        # first draw
+
         self.teken_grafiek(self.canvas, self.maak_data(1000, 100))
 
-    # ---------------- LOGIC ----------------
 
     def rentepercentage_berekenen(self, saldo):
         if saldo <= 0:
@@ -84,7 +77,7 @@ class RenteScreen(tk.Frame):
         data = []
         saldo = start_saldo
 
-        for i in range(6):
+        for _ in range(6):
             saldo += per_maand
             saldo += self.rente_berekenen(saldo) * 30
             data.append(round(saldo, 2))
@@ -130,8 +123,12 @@ class RenteScreen(tk.Frame):
             )
 
         for x, y in punten:
-            canvas.create_oval(x-4, y-4, x+4, y+4,
-                                fill="white", outline="#666666", width=2)
+            canvas.create_oval(
+                x-4, y-4, x+4, y+4,
+                fill="white",
+                outline="#666666",
+                width=2
+            )
 
     def bereken(self):
         try:

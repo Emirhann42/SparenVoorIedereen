@@ -48,7 +48,6 @@ class SettingsScreen(tk.Frame):
         maak_optie("Twee-factor Authenticatie")
         maak_optie("Notificaties")
 
-        # 🔥 LOGOUT BUTTON (now works)
         uitloggen_knop = tk.Button(
             kaart,
             text="Uitloggen",
@@ -60,7 +59,6 @@ class SettingsScreen(tk.Frame):
         )
         uitloggen_knop.pack(pady=20)
 
-        # 🔙 Back button (optional but useful)
         terug_knop = tk.Button(
             self,
             text="← Terug",
