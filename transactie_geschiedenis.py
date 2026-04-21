@@ -1,7 +1,7 @@
 ﻿import tkinter as tk
 
 
-class TransactiesScreen(tk.Frame):
+class GeschidenisScreen(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent, bg="#333333")
 

@@ -58,7 +58,20 @@ class LoginScreen(tk.Frame):
         con.close()
 
         if result:
-            messagebox.showinfo("Success", "Logged in!")
+            self.controller.current_user = result
+
+            con = sqlite3.connect("database.db")
+            cur = con.cursor()
+
+            cur.execute(
+                "SELECT * FROM spaarrekening WHERE klant_id = ?",
+                (result[0],)
+            )
+
+            bank = cur.fetchone()
+            self.controller.current_bank = bank
+
+            con.close()
 
             self.controller.show_frame("HomeScreen")
 

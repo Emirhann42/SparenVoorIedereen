@@ -4,8 +4,9 @@ from login import LoginScreen
 from homescreen import HomeScreen
 from instellingen import SettingsScreen
 from rente_grafiek import RenteScreen
-from transactie_geschiedenis import TransactiesScreen
+from transactie_geschiedenis import GeschidenisScreen
 from register import RegisterScreen
+from transactie import TransactieScreen
 
 
 class App(tk.Tk):
@@ -20,8 +21,10 @@ class App(tk.Tk):
         container = tk.Frame(self)
         container.pack(fill="both", expand=True)
 
-        # Add all screens
-        for F in (LoginScreen, HomeScreen, SettingsScreen, RenteScreen, TransactiesScreen, RegisterScreen):
+        self.current_user = None
+        self.current_bank = None
+
+        for F in (LoginScreen, HomeScreen, SettingsScreen, RenteScreen, TransactieScreen, RegisterScreen, GeschidenisScreen):
             frame = F(container, self)
             self.frames[F.__name__] = frame
             frame.grid(row=0, column=0, sticky="nsew")
@@ -30,6 +33,10 @@ class App(tk.Tk):
 
     def show_frame(self, name):
         frame = self.frames[name]
+
+        if hasattr(frame, "update_data"):
+            frame.update_data()
+
         frame.tkraise()
 
 
